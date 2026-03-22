@@ -9,9 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Expenz",
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: "Inter",
+      ),
       home: Scaffold(
-        body: SafeArea(child: Text("Kaushalya", style: TextStyle(fontSize: 30),)),
+        body: Center(child: Text("Hello Flutter", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),)
       ),
     );
   }
