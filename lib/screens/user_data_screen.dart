@@ -1,5 +1,7 @@
 import 'package:expenz_app/constance/colors.dart';
 import 'package:expenz_app/constance/constance.dart';
+import 'package:expenz_app/screens/main_screen.dart';
+import 'package:expenz_app/services/user_service.dart';
 import 'package:expenz_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -133,15 +135,28 @@ Widget build(BuildContext context) {
                   ),
                   SizedBox(height: 30,),
                   GestureDetector(
-                    onTap: () {
+                    onTap: ()async {
                       if(_formKey.currentState!.validate()){
                         // form is valid, process data
                         String userName = _userNameController.text;
                         String email = _emailController.text;
                         String password = _passwordController.text;
-                        String confrimPassword = _confirmPasswordController.text;
+                        String confirmPassword = _confirmPasswordController.text;
 
-                        print("$userName $email $password $confrimPassword");
+                        // save the user name and email in device storage
+                        await UserService.storeUserDetails(
+                          userName: userName, 
+                          email: email, 
+                          password: password, 
+                          confirmPassword: confirmPassword, 
+                          context: context);
+
+                          //navigate to the main screen
+                          if(context.mounted){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const MainScreen();
+                          },),);
+                      }
                       }
                     },
                     child: CustomButton(buttonName: "Next", buttonColor: kMainColor))
