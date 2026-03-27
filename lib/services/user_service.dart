@@ -45,4 +45,14 @@ static Future<bool> checkUserName() async{
   String? userName = prefs.getString("username");
   return userName != null;
 }
+// get the username and email
+static Future<Map < String, String >> getUserData () async {
+     //create a instance for shared preferences
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+     String? userName = prefs.getString("username");
+     String? email = prefs.getString("email");
+
+     return {"username" : userName!, "email" : email!};
+     }
 }
