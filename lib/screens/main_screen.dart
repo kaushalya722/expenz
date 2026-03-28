@@ -22,9 +22,10 @@ int _currentPageIndex = 0;
   Widget build(BuildContext context) {
 
   final List<Widget> pages = [
+    AddNewScreen(),
     HomeScreen(),
     TransactionScreen(),
-    AddNewScreen(),
+    // AddNewScreen(),
     BudgetScreen(),
     ProfileScreen()
   ];
