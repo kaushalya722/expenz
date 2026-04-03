@@ -2,13 +2,18 @@ import 'package:expenz_app/constance/colors.dart';
 import 'package:expenz_app/constance/constance.dart';
 import 'package:expenz_app/model/expense_model.dart';
 import 'package:expenz_app/model/income_model.dart';
+import 'package:expenz_app/services/expence_service.dart';
+import 'package:expenz_app/services/income_service.dart';
 import 'package:expenz_app/widgets/custom_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
-  const AddNewScreen({super.key});
+
+  final Function (Expence) addExpence;
+  final Function(Income) addIncome;
+  const AddNewScreen({super.key, required this.addExpence, required this.addIncome});
 
   @override
   State<AddNewScreen> createState() => _AddNewScreenState();
@@ -309,9 +314,64 @@ class _AddNewScreenState extends State<AddNewScreen> {
                               thickness: 3,
                             ),
                             const SizedBox(height: 20,),
-                            CustomButton(
-                              buttonName: "Add", 
-                              buttonColor: _selectedMethod == 0 ? kRed : kGreen)
+                            
+
+                            //submit button
+                            GestureDetector(
+                              onTap: () async{
+                                //save the expences or income data into shared preferences
+                                if(_selectedMethod == 0) {
+                                   
+                                   //adding expences
+                                    List<Expence> loadedExpences = await ExpenceService().loadExpences();
+                                
+
+                                //create the expence to store
+                                Expence expence =  Expence(
+                                  id: loadedExpences.length + 1, 
+                                  title: _titleController.text, 
+                                  amount: _amountController.text.isEmpty ? 0: double.parse(_amountController.text), 
+                                  category: _expenceCategory, 
+                                  date: _selectedDate, 
+                                  time: _selectedTime, 
+                                  description: _descriptionController.text);
+                               
+                              //add expence
+                              widget.addExpence(expence); 
+
+                              // clear the feilds
+                              _titleController.clear();
+                              _amountController.clear();
+                              _descriptionController.clear();
+                                }else{
+
+                                  //load incomes
+                                  List<Income> loadedIncomes = await IncomeService().loadIncomes();
+
+                                  //create the new income
+                                  Income income =  Income(
+                                    id: loadedIncomes.length + 1, 
+                                    title: _titleController.text, 
+                                    amount: _amountController.text.isEmpty ? 0 : double.parse(_amountController.text), 
+                                    category: _incomeCategory, 
+                                    date: _selectedDate, 
+                                    time: _selectedTime, 
+                                    description: _descriptionController.text);
+
+                                    widget.addIncome(income);
+
+                                    // clear the feilds
+                              _titleController.clear();
+                              _amountController.clear();
+                              _descriptionController.clear();
+                                }
+                               
+                                
+                              },
+                              child: CustomButton(
+                                buttonName: "Add", 
+                                buttonColor: _selectedMethod == 0 ? kRed : kGreen),
+                            )
                         ],
                       ),
                     ),

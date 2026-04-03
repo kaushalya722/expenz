@@ -32,7 +32,7 @@ class Expence {
    final int id;
     final String title;
     final double amount;
-    final IncomeCategory category;
+    final ExpenceCategory category;
     final DateTime date;
     final DateTime time;
     final String description;
@@ -45,4 +45,32 @@ class Expence {
     required this.date, 
     required this.time, 
     required this.description});
+
+
+    //convert the expence object to a json object (serialization)
+    Map <String, dynamic> toJson () {
+      return {
+        'id' : id,
+        'title' : title,
+        'amount' : amount,
+        'category' : category.index,
+        'date' : date.toIso8601String(),
+        'time' : time.toIso8601String(),
+        'description' : description,
+
+      };
+    }
+
+    //create an expence object from a json object (deserialization)
+    factory Expence.fromJson( Map <String, dynamic> json){
+         return Expence(
+          id: json['id'], 
+          title: json['title'], 
+          amount: json['amount'], 
+          category: ExpenceCategory.values[json['category']], 
+          date: DateTime.parse(json['date']), 
+          time: DateTime.parse(json['time']), 
+          description: json['description']
+          );
+    }
 }
