@@ -30,7 +30,7 @@ void fetchAllExpences () async {
   List<Expence> loadedExpences = await ExpenceService().loadExpences();
   setState(() {
     expenceList = loadedExpences;
-     print(expenceList.length);
+     
   });
   // print(expenceList.length);
 }
@@ -40,7 +40,7 @@ void fetchAllIncomes() async {
   List<Income> loadedIncomes = await IncomeService().loadIncomes();
   setState(() {
     incomeList = loadedIncomes;
-     print(incomeList.length);
+     
   });
 }
 
@@ -75,15 +75,26 @@ void  addNewExpence (Expence newExpence){
     });
   }
 
+  //function to remove a expence
+  void removeExpence (Expence expence){
+    ExpenceService().deleleExpence(expence.id, context);
+    setState(() {
+      expenceList.remove(expence);
+    });
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
 
   final List<Widget> pages = [
-   
+   TransactionScreen(
+    expencesList: expenceList,
+    onDismissedExpence: removeExpence,
+   ),
     HomeScreen(),
-    TransactionScreen(),
+    
      AddNewScreen(
       addExpence: addNewExpence,
       addIncome: addNewIncome,

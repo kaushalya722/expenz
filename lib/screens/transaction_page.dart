@@ -1,7 +1,16 @@
+import 'dart:math';
+
+import 'package:expenz_app/constance/colors.dart';
+import 'package:expenz_app/constance/constance.dart';
+import 'package:expenz_app/model/expense_model.dart';
+import 'package:expenz_app/widgets/expence_card.dart';
 import 'package:flutter/material.dart';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({super.key});
+  final List<Expence> expencesList;
+  final void Function(Expence) onDismissedExpence;
+
+  const TransactionScreen({super.key, required this.expencesList, required this.onDismissedExpence});
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();
@@ -11,7 +20,65 @@ class _TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Transaction Screen"),),
+      body: SafeArea(
+        child: Padding(padding: EdgeInsets.all(kDefaulPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+           const Text("See your financial report", style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: kMainColor,
+            ),),
+
+            const SizedBox(height: 20,),
+
+            const Text("Expenses", style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: kBlack,
+            ),),
+            const SizedBox(height: 20,),
+            //show all the expenses
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.35,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: widget.expencesList.length,
+                      itemBuilder: (context, index) {
+                      final expence = widget.expencesList[index];
+
+                      return Dismissible(
+                        key: ValueKey(expence),
+                        direction: DismissDirection.startToEnd,
+                        onDismissed: (direction) {
+                          setState(() {
+                            widget.onDismissedExpence(expence);
+                          });
+                        },
+                        child: ExpenceCard(
+                          title: expence.title, 
+                          date: expence.date, 
+                          amount: expence.amount, 
+                          category: expence.category, 
+                          description: expence.description, 
+                          time: expence.time),
+                      );
+                    },)
+                  ],
+                ),
+              ),
+            ),
+
+          ],
+        ),
+        ),
+        ),
     );
   }
 }
