@@ -83,25 +83,36 @@ void  addNewExpence (Expence newExpence){
     });
   }
 
+  void removeIncome(Income income){
+    IncomeService().deleteIncome(income.id, context);
+    setState(() {
+      incomeList.remove(income);
+    });
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
 
   final List<Widget> pages = [
+
+  HomeScreen(),
+
    TransactionScreen(
+    onDismissedIncome: removeIncome,
     expencesList: expenceList,
+    incomeList: incomeList,
     onDismissedExpence: removeExpence,
    ),
-    HomeScreen(),
     
-     AddNewScreen(
+  AddNewScreen(
       addExpence: addNewExpence,
       addIncome: addNewIncome,
 
     ),
-    BudgetScreen(),
-    ProfileScreen()
+  BudgetScreen(),
+  ProfileScreen()
   ];
 
     return Scaffold(

@@ -1,28 +1,29 @@
 import 'package:expenz_app/constance/colors.dart';
-import 'package:expenz_app/model/expense_model.dart';
+import 'package:expenz_app/model/income_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ExpenceCard extends StatelessWidget {
+class IncomeCard extends StatelessWidget {
   final String title;
   final DateTime date;
   final double amount;
-  final ExpenceCategory category;
+  final IncomeCategory category;
   final String description;
   final DateTime time;
 
-  const ExpenceCard({
+  const IncomeCard({
     super.key, 
     required this.title, 
     required this.date, 
     required this.amount, 
-    required this.category, 
+    required this.category,
     required this.description, 
     required this.time});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -44,12 +45,12 @@ class ExpenceCard extends StatelessWidget {
             width: 55,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: expenceCategoriesColors[category]?.withOpacity(0.2),
+              color: incomeCategoryColors[category]?.withOpacity(0.2),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                expenceCategoriesImages[category]!,
+                incomeCategoryImages[category]!,
                 width: 20,
                 height: 20,
                 
@@ -80,14 +81,14 @@ class ExpenceCard extends StatelessWidget {
            Column(
             crossAxisAlignment: CrossAxisAlignment.end,
                children: [
-                Text("-\$${amount.toStringAsFixed(2)}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kRed),),
+                Text("+\$${amount.toStringAsFixed(2)}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kGreen),),
 
                 Text(DateFormat.jm().format(date), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: kGrey),),
                ],
            )
  
         ],
-      ),
+      )
     );
   }
 }
