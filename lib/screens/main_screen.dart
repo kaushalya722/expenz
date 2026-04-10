@@ -133,6 +133,7 @@ void  addNewExpence (Expence newExpence){
   final List<Widget> pages = [
   
   HomeScreen(
+    
     expencesList: expenceList,
     incomeList: incomeList,
   ),
@@ -153,7 +154,8 @@ void  addNewExpence (Expence newExpence){
     expenceCategoryTotals: calculateExpenseCategories(),
     incomeCategoryTotals: calculateIncomeCategories(),
   ),
-  ProfileScreen()
+  ProfileScreen(),
+  
   ];
 
     return Scaffold(

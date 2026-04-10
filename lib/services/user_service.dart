@@ -55,4 +55,12 @@ static Future<Map < String, String >> getUserData () async {
 
      return {"username" : userName!, "email" : email!};
      }
+
+
+     // remove the user and email from shared preference
+     static Future<void> clearUserData () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('username');
+      await prefs.remove('email');
+     }
 }

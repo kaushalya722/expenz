@@ -61,16 +61,17 @@ class _CategoryCardState extends State<CategoryCard> {
                     color: kBlack,
                   ),
                   ),
-                  Text("${widget.amount.toStringAsFixed(2)} \$",
+                
+                ],
+              ),),
+             ),
+               Text("${widget.amount.toStringAsFixed(2)} \$",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: widget.isExpence ? kRed : kGreen,
                   ),
                   ),
-                ],
-              ),),
-             )
             ],
            ),
            const SizedBox(height: 15,),
