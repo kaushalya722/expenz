@@ -96,8 +96,11 @@ void  addNewExpence (Expence newExpence){
   Widget build(BuildContext context) {
 
   final List<Widget> pages = [
-
-  HomeScreen(),
+  BudgetScreen(),
+  HomeScreen(
+    expencesList: expenceList,
+    incomeList: incomeList,
+  ),
 
    TransactionScreen(
     onDismissedIncome: removeIncome,
@@ -111,7 +114,7 @@ void  addNewExpence (Expence newExpence){
       addIncome: addNewIncome,
 
     ),
-  BudgetScreen(),
+  
   ProfileScreen()
   ];
 

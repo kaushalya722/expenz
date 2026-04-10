@@ -11,7 +11,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Budget Screen"),),
+      body: SafeArea(child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              textAlign: TextAlign.center,
+              "Financial Report", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+          ],
+        ),
+      )),
     );
   }
 }
