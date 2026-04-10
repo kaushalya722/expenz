@@ -89,6 +89,41 @@ void  addNewExpence (Expence newExpence){
       incomeList.remove(income);
     });
   }
+  
+  //category tatal expense
+  Map<ExpenceCategory, double> calculateExpenseCategories() {
+    Map<ExpenceCategory, double> categoryTotals = {
+      ExpenceCategory.food: 0,
+      ExpenceCategory.health : 0,
+      ExpenceCategory.shopping : 0,
+      ExpenceCategory.subscription : 0,
+      ExpenceCategory.transport : 0,
+    };
+
+    for(Expence expence in expenceList){
+      categoryTotals[expence.category] = 
+      categoryTotals[expence.category]! + expence.amount;
+
+    }
+    return categoryTotals;
+  }
+
+  //category tatal Income
+  Map<IncomeCategory, double> calculateIncomeCategories() {
+    Map<IncomeCategory, double> categoryTotals = {
+     IncomeCategory.freelance : 0,
+     IncomeCategory.passive : 0,
+     IncomeCategory.sales : 0,
+     IncomeCategory.salary : 0,
+    };
+
+    for(Income income in incomeList){
+      categoryTotals[income.category] = 
+      categoryTotals[income.category]! + income.amount;
+
+    }
+    return categoryTotals;
+  }
 
 
 
@@ -96,7 +131,7 @@ void  addNewExpence (Expence newExpence){
   Widget build(BuildContext context) {
 
   final List<Widget> pages = [
-  BudgetScreen(),
+  
   HomeScreen(
     expencesList: expenceList,
     incomeList: incomeList,
@@ -114,7 +149,10 @@ void  addNewExpence (Expence newExpence){
       addIncome: addNewIncome,
 
     ),
-  
+  BudgetScreen(
+    expenceCategoryTotals: calculateExpenseCategories(),
+    incomeCategoryTotals: calculateIncomeCategories(),
+  ),
   ProfileScreen()
   ];
 
